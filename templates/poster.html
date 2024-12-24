@@ -1,0 +1,151 @@
+{% extends 'layout.html'%}
+{% block title %}Create Post{% endblock %}
+
+{% block style %}
+    body, html {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        font-family: Arial;
+        background-color: rgb(210,246,255);
+    }
+    .window {
+        background-color: white;
+        width: 70%;
+        height: 70%;
+        border: solid 1px black;
+        padding: 0 3% 3% 3%;
+    }
+    h3 {
+        margin: 5px 0;
+    }
+    select {
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        padding-left: 7.5px;
+        border-radius: 5px;
+    }
+    .title {
+        box-shadow: 0 1px black;
+    }
+    .locSect {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .pi
+    .entry {
+        width: 100%;
+    }
+    .topics {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .topic {
+        display: inline-flex;
+        flex-direction: column;
+    }
+    #number {
+        align-self: center;
+        margin-left: 10px;
+    }
+    #text-input {
+        width: 100%;
+    }
+    .bot-btn {
+        margin-top: 20px;
+    }
+    textarea {
+        resize: none;
+    }
+    .inUSbox {
+        display: flex;
+    }
+    .inUSbox p {
+        margin-right: 10px;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="window">
+        <div class="title"><h1>Create a Post</h1></div>
+        <form action="{{ url_for('post')}}" method="post">
+                    <div class="locSect">
+            <input type="text" id="place-input" name="city" list="suggestions" placeholder="Type a city...">
+            <datalist id="suggestions"></datalist>
+            <input type="text" id="placec-input" name="country" list="suggestionss" placeholder="Type a country...">
+            <datalist id="suggestionss"></datalist>
+        </div>
+        <div class="entry">
+            <div class="topics">
+                <div class="topic">
+                    <h3>Ease of Travel</h3>
+                    <select id="number" name="eot">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected="selected">5</option>
+                    </select>
+                </div>
+                <div class="topic">
+                    <h3>Cost</h3>
+                    <select id="number" name="col">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected="selected">5</option>
+                    </select>
+                </div>
+                <div class="topic">
+                    <h3>Overall</h3>
+                    <select id="number" name="overall">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected="selected">5</option>
+                    </select>
+                </div>
+                <div class="topic">
+                    <h3>Activities/Excitement</h3>
+                    <select id="number" name="ae">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected="selected">5</option>
+                    </select>
+                </div>
+                <div class="topic">
+                    <h3>Hospitality</h3>
+                    <select id="number" name="h">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected="selected">5</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3>Written Review</h3>
+            <textarea name="review" placeholder="(Optional)" autocomplete="off" id="text-input" rows="6" cols="50"></textarea>
+            <div class="bot-btn">
+                <input type="submit" name="submit" id="submit-btn">
+                <a href="{{url_for('user')}}"><button type="button">Cancel</button></a>
+            </div>
+        </form>
+
+            
+        </div>
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends "layout.html"%}
+
+{% block title %}GYAATTT{% endblock %}
+{% block style %}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            overflow: hidden;
+            box-shadow: 0 0 3px 0 black;
+        }
+        .nav-list {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+        .placeDisplay {
+            font-family: "Roboto Mono", monospace;
+            font-weight: bold;
+            text-align: center;
+        }
+        .backBtn {
+            border: solid 1px black;
+            padding: 1px;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+
+        .overallDisp {
+            text-align: center;
+        }
+        .overalL {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .medalBar {
+            display: flex;
+            justify-content: center;
+        }
+        .medal {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            padding: 20px 0 0 0;
+            margin: 20px 0 5px 0;
+            border-radius: 50px;
+            border: solid 2px black;
+            font-size: 40px;
+            width: 90px;
+            height: 70px;
+        }
+
+        .ratingSect {
+            margin: 30px 0 0 0;
+            padding: 20px;
+            display: flex;
+            
+            justify-content: center;
+            border: solid 2px black;
+        }
+        .topicRate {
+            width: 100px;
+            text-align: center;
+        }
+        .topic{
+            margin-top: 5px;
+        }
+        .num{
+            font-weight: bolder;
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+        }
+{% endblock %}
+
+{% block content %}
+    <nav>
+        <ul class="nav-list">
+            <li>{{country}}</li>
+            <li>
+                <form action="{{ url_for('place') }}" method="post">
+                    <input type="text" name="citySearch" list="suggestions" id="place-input" placeholder="City" autocomplete="off">
+                    <datalist id="suggestions"></datalist>
+                    <input type="text" name="countrySearch" list="suggestionss" id="placec-input" placeholder="Country/State" autocomplete="off">
+                    <datalist id="suggestionss"></datalist>
+                    <input type="submit" name="submit" value="&#x1F50D">
+                </form>
+            </li>
+            <li>
+                <a href="{{ url_for('user')}}" class="backBtn">Back</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="placeDisplay">
+        <h1>{{city}}, {{country}}</h1>
+    </div>
+    <div class="overallDisp">
+        <div class="medalBar">
+            <p class="medal">{{ovrall}}</p>
+
+        </div>
+        
+        <p class="overalL">Overall</p>
+    </div>
+    <div class="ratingSect">
+        <div class="topicRate">
+            <p class="num">{{ease}}</p>
+            <p class="topic">Ease of Travel</p>
+        </div>
+        <div class="topicRate">
+            <p class="num">{{cost}}</p>
+            <p class="topic">Cost</p>
+        </div>
+        <div class="topicRate">
+            <p class="num">{{hosp}}</p>
+            <p class="topic">Hospitality</p>
+        </div>
+        <div class="topicRate">
+            <p class="num">{{act}}</p>
+            <p class="topic">Activities</p>
+        </div>
+    </div>
+    {% for item in posts %}
+        <div class="post">
+            <div class="top-bar">
+                <div class="star-container">
+                    {% for star in range(item.overall) %}
+                        <p id="star">★</p>
+                    {% endfor %}
+                    <p class="date">{{item.created_at.strftime('%B %d %Y')}}</p>
+                </div>
+                <div class="usrname">{{item.user}}</div>
+            </div>
+            <div class="review">
+                <p>{{item.writtenReview}}</p>
+            </div>
+            <div class="bot-bar">
+                <div class="postLike">
+                    <i onclick="myFunction(this)" class="fa-regular fa-heart"></i>
+                </div>
+
+                <div class="postLoco">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p>{{item.country}}, {{item.city}}</p>
+                </div>
+            </div>
+            
+        </div>
+    {% endfor %}
+    {% if empty %}
+        <h1>There are no reviews, be the first!</h1>
+    {% endif %}
+</body>
+{% endblock %}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(rgb(255, 255, 255), rgb(208, 234, 255));
+        }
+        .back {
+            border: none;
+            background: none;
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            padding: 0;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .back img {
+            height: 60px;
+            width: 60px;
+        }
+        .logBox {
+            z-index: 1;
+            position: relative;
+            background-color: white;
+            
+            margin: -50 0 0 0;
+            padding: 10px 20px 40px 20px;
+            
+            width: 280px;
+            border-style: solid;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form input {
+            margin: 10px;
+
+        }
+        form .box {
+            padding: 10px;
+            border: none;
+            border-bottom: .5px solid black;
+            outline: none;
+        }
+        form .btn {
+            background-color: white;
+            border-style: solid;
+            padding: 10px;
+            width: 115px;
+            border-radius: 20px;
+            border-width: .5px;
+        }
+        .content h1 {
+            color: aliceblue;
+            font-size: 35px;
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+            margin-left: 10px;
+
+        }
+        .content p {
+            margin-left: 10px;
+            font-size: 10px;
+            color: black;
+            font-family: monospace, sans-serif;
+        }
+        form .btn:hover {
+            background-color: rgb(0, 0, 0);
+            border-style: solid;
+            color: white;
+            padding: 10px;
+            width: 115px;
+            border-radius: 20px;
+        }
+        .logo {
+            z-index: 50;
+            height: 55px;
+            width: 135px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 0 10px 0;
+
+            
+        }
+        .flash {
+            color: red;
+            font-family: arial;
+            font-size: 10px;
+            margin-left: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}" class="back">
+        <img src="{{ url_for('static', filename='images/back.png') }}" alt="">
+    </a>
+    
+    <div class="logBox">
+        <div class="content">
+            <img src="{{ url_for('static', filename='images/boldedturuedit.png') }}" alt="" class="logo">
+            <h1>Login</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p class="flash">{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}
+            {% endblock %}
+            <form action="#" method="post">
+                <input type="text" placeholder="Username/Email" class="box" name="usr">
+                <input type="password" placeholder="Password" class="box" name="pass">
+                <input type="submit" class="btn">
+            </form>
+            <p class="new">New traveler? <a href="{{ url_for('signup') }}"> Sign Up</a></p>
+            
+        </div>
+    </div>
+</body>
+</html>

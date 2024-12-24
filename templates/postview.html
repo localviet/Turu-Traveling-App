@@ -1,0 +1,9 @@
+{% extends 'layout.html'%}
+{% block title %}Posts View{% endblock%}
+
+{% block content%}
+	{% for item in posts %}
+		<p>overall: {{ item.overall }} || user : {{  item.user }} || written : {{ item.writtenReview }} || {{item.inUS}} || {{item.city}} || {{item.country}}</p>
+	{% endfor %}
+{% endblock %}
+

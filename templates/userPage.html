@@ -1,0 +1,257 @@
+{% extends "layout.html" %}
+
+{% block title %} {{usrNm}} {%endblock%}
+
+
+
+
+{% block style %}
+	body {
+	    display: flex;
+	    margin: 0;
+	    padding: 0;
+	    height: 100vh; 
+	
+	}
+
+	.left {
+	    display: flex;
+	    flex-direction: column;
+	    width: 200px;
+	    box-shadow: 2px 0 5px -2px gray;
+	    position: fixed;
+	    align-items: center;
+	    height: 100%;
+	    padding: 8px 0;
+	    
+	}
+
+	.left a {
+	    width: 90%;
+	    text-align: center; 
+	}
+
+	.left a button {
+	    width: 100%; 
+	    height: 50px; 
+	    background-color: white;
+	    border: none;
+	    font-size: 15px;
+	    cursor: pointer; 
+	    transition: background-color 0.3s, font-size 0.3s;
+		border-radius: 8px;
+	}
+
+	.left a button:hover {
+	    background-color: rgb(239, 243, 249);
+	    font-size: 17px;
+	}
+
+	.middle {
+	    margin: 0 auto;
+	    padding: 10px 20px 10px 20px;
+	    flex-grow: 1; /* Allow the middle section to grow and take available space */
+	    margin-left: 210px; 
+	    margin-right: 210px; 
+	    overflow-y: scroll; /* Allow scrolling if content overflows */
+	    height: 100%;
+
+	}
+
+	.right {
+	    position: fixed;
+	    right: 0;
+	    width: 190px;
+	    height: 100%;
+	    box-shadow: -2px 0 5px -2px gray;
+	    display: flex;
+	    flex-direction: column;
+		
+	    padding: 8px 10px 8px 10px;
+	    overflow-y: auto; /* Allow scrolling within the sidebar if content overflows */
+	}
+	.searchSect {
+		display: flex;
+		flex-direction: column;
+	}
+	.box {
+		padding: 10px;
+		border: none;
+		border-bottom: .5px solid black;
+		outline: none;
+		width: 80%;
+	}
+	.right input {
+	    width: 60%;
+	    margin: 10px auto;
+	    padding: 10px;
+	    border: 1px solid black;
+	}
+	.top h1{
+		font-size: 30px;
+		text-align: center;
+	}
+	.top .lb {
+		padding: 8px;
+		margin: 2px;
+		border: 1px solid black;
+		text-decoration: none;
+		color: black;
+	}
+
+	/* For webkit browsers (Chrome, Safari) */
+	.middle:hover {
+    	scrollbar-color: auto auto; /* For Firefox */
+    	padding-right: 14px; /* Remove padding when scrollbar is visible */
+	}
+	.middle::-webkit-scrollbar {
+	    width: 0; /* Initially hide scrollbar */
+	}
+
+	.middle:hover::-webkit-scrollbar {
+	    width: 6px; /* Show scrollbar on hover */
+	}
+
+	.middle::-webkit-scrollbar-thumb {
+	    background: #888; /* Style of the scrollbar thumb */
+	    border-radius: 10px; /* Rounded corners for the thumb */
+	}
+
+	.middle::-webkit-scrollbar-thumb:hover {
+	    background: #555; /* Darker thumb on hover */
+	}
+
+	.flashed {
+	}
+
+	.opt {
+		background-color: blue;
+	}
+
+	.lb_places {
+		display: flex;
+		flex-direction: column;
+		
+	}
+
+	.lb {
+
+	}
+{% endblock %}
+{% block content %}
+	<div class="left">
+		<a href="{{ url_for('logout') }}"><button>Logout</button></a>
+		<a href="{{ url_for('settings') }}"><button>Settings</button></a>
+		<a href="{{ url_for('post') }}"><button>Post</button></a>
+	</div>
+	<div class="middle">
+		<h1>Welcome {{ usrNm }}!</h1>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for msg in messages %}
+					<p class="flashed">{{msg}}</p>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<h1 style="font-family: helvetica;">Post Feed:</h1>
+		{% for item in posts %}
+			<div class="post">
+				<div class="top-bar">
+					<div class="star-container">
+						{% for star in range(item.overall) %}
+							<p id="star">★</p>
+						{% endfor %}
+						<p class="date">{{item.created_at.strftime('%B %d %Y')}}</p>
+					</div>
+					<div class="usrname">{{item.user}}</div>
+				</div>
+				<div class="review">
+					<p>{{item.writtenReview}}</p>
+				</div>
+				<div class="bot-bar">
+					<div class="postLike">
+						<i onclick="myFunction(this)" class="fa-regular fa-heart"></i>
+					</div>
+
+					<div class="postLoco">
+						<i class="fa-solid fa-location-dot"></i>
+						<p>{{item.city}}, {{item.country}}</p>
+					</div>
+				</div>
+				
+			</div>
+		{% endfor %}
+	</div>
+	<div class="right">
+		<form action="{{ url_for('place') }}" method="post" class="searchSect">
+	        <input type="text" name="citySearch" list="suggestions" id="place-input" placeholder="City" autocomplete="off" class="box">
+	        <datalist id="suggestions"></datalist>
+			<input type="text" name="countrySearch" list="suggestionss" id="placec-input" placeholder="Country/State" autocomplete="off" class="box">
+			<datalist id="suggestionss"></datalist>
+			<input type="submit" name="plsub">
+		</form>
+		<div class="top">
+			<h1>Top Places to Visit</h1>
+			<div class="lb_places">
+				{% for topPl in top %}
+					<a class="lb" href="{{ url_for('place', city=topPl.city,country=topPl.country) }}">{{ loop.index }}. {{ topPl.city }}, {{ topPl.country }}</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+    <script>
+        let offset = 8;
+        let loading = false;  // Add a loading flag
+
+        function loadMorePosts() {
+            if (loading) return;  // If already loading, do not proceed
+
+            loading = true;  // Set loading flag
+            $.ajax({
+                url: '/load_more_posts',
+                type: 'GET',
+                data: { offset: offset },
+                success: function(data) {
+                    offset += 5;
+                    data.forEach(function(post) {
+                        $('.middle').append(`
+                            <div class="post">
+                                <div class="top-bar">
+                                    <div class="star-container">
+                                        ${'<p id="star">★</p>'.repeat(post.overall)}
+                                        <p class="date">${post.created_at}</p>
+                                    </div>
+                                    <div class="usrname">${post.user}</div>
+                                </div>
+                                <div class="review">
+                                    <p>${post.writtenReview}</p>
+                                </div>
+                                <div class="bot-bar">
+                                    <div class="postLike">
+                                        <i onclick="myFunction(this)" class="fa-regular fa-heart"></i>
+                                    </div>
+                                    <div class="postLoco">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <p>${post.city}, ${post.country}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    });
+                    loading = false;  // Reset loading flag after completion
+                },
+                error: function() {
+                    loading = false;  // Reset loading flag on error
+                }
+            });
+        }
+
+        $('.middle').scroll(function() {
+            if ($('.middle').scrollTop() + $('.middle').innerHeight() >= $('.middle')[0].scrollHeight - 100) {
+                loadMorePosts();
+            }
+        });
+    </script>
+
+{% endblock %}

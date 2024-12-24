@@ -1,0 +1,16 @@
+{% extends 'layout.html'%}
+{% block title%}Settings{% endblock %}
+
+{% block content %}
+	<h1>Change Name</h1>
+	<form action="{{ url_for('nameChange') }}" method="post">
+		<input type="text" name="newName">
+		<input type="submit" name="submit" >
+	</form>
+	<h1>Change Email</h1>
+	<form action="{{ url_for('emailChange') }}" method="post">
+		<input type="text" name="newEmail">
+		<input type="submit" name="submit">
+	</form>
+	<a href="{{ url_for('user') }}"> <button>Back</button></a>
+{% endblock %}

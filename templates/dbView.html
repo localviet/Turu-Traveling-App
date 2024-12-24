@@ -1,0 +1,8 @@
+{% extends 'layout.html'%}
+{% block title %}Account View{% endblock%}
+
+{% block content%}
+	{% for item in accounts %}
+		<p>Name: {{ item.name }} || Email: {{  item.email }} || Password: {{ item.password }}</p>
+	{% endfor %}
+{% endblock %}

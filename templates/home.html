@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homeCSS.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="left">
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+            </ul>
+        </div>
+        <div class="center">
+
+            <img src="{{ url_for('static', filename='images/boldedturuedit.png') }}" alt="" class="logo">
+
+        </div>
+        <div class="right">
+            <ul>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="banner">
+        <h1 class="slogan">A travelers best friend!</h1>
+        <p class="readmore">Read More ↓</p>
+        <div class="info-sect">
+            <div class="info-con">
+                <div class="sect" id="left">
+                    <h2>What is Turu?</h2>
+                    <p>Turu (Travel Guru) is a dynamic and user-friendly travel review platform designed to help travelers explore destinations with confidence.
+                    The website allows users to leave detailed reviews and rate various aspects of cities and countries, providing valuable insights for fellow 
+                    travelers.</p>
+                </div>
+                <div class="sect" id="right">
+                    <h2>How to use Turu</h2>
+                    <p>Create an account and login! You're able to post and view reviews on locations.</p>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: rgb(244, 255, 255);
+    /*background-image: url(images/landscape.JPEG); */
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+    /*background: linear-gradient(to bottom, rgb(141, 221, 255), transparent);*/
+    background-color: white;
+    box-sizing: border-box;
+    transition: border-bottom .2s;
+    width: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 1000;
+    box-shadow: 0 0 2px 0;
+}
+nav div ul{
+    display: flex;
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    align-items: center;
+}
+li {
+    margin: 0 10px;
+    padding: 0 10px;
+    
+}
+li a {
+    margin-top: 2px;
+    font-family: 'Arial', 'sans-serif';
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 3px 10px;
+    color: black;
+    background-color: white;
+    transition: color .3s;
+
+}
+.logo {
+    width: 120px;
+    height: 35px;
+    margin-top: 5px;
+
+}
+.slogan {
+    text-align: center;
+    margin: 150px 0 320px 0;
+    animation-name: slide;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+}
+@keyframes slide{
+    0%{
+        transform: translateX(-500px);
+    }
+    100%{
+
+    }
+}
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-image: url('../images/landscape.jpeg');
+    background-size: cover; /* Adjust as needed */
+    filter: brightness(1.1);
+}
+
+
+li a:hover {
+    color: rgb(163,189,189);
+
+}
+.land {
+    width: 100%;
+}
+.info-sect {
+    background-color: white;
+    padding-bottom: 270px;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.5); /* X offset, Y offset, blur radius, color */
+    display: flex;
+    justify-content: center;
+
+}
+.info-con {
+    width: 65%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.readmore {
+    text-align: center;
+}
+.readmore a {
+    text-decoration: none;
+    color: aliceblue;
+}
+.info-con h2  {
+    text-align: center;
+}
+.sect {
+    border-radius: 10px;
+    width: 40%;
+}
+#left {
+    background-color: antiquewhite;
+}
+#right {
+    background-color: rgb(203, 255, 238);
+}
